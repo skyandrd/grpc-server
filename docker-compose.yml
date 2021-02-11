@@ -1,21 +1,21 @@
 version: '3.8'
 services:
-  grpc-server:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - PORT=55555
-      - MONGO_CIENT_CONNECTION_TEMEOUT=10
-      - MONGO_DB_URI=mongodb://mongodb:27017
-      - MONGO_DB=servicedb
-      - MONGO_PRICE_COLLECTION=pricelist
-    networks:
-      - host
-    ports:
-      - "55555:55555"
-    depends_on:
-      - mongodb
+  # grpc-server:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - PORT=55555
+  #     - MONGO_CIENT_CONNECTION_TEMEOUT=10
+  #     - MONGO_DB_URI=mongodb://mongodb:27017
+  #     - MONGO_DB=servicedb
+  #     - MONGO_PRICE_COLLECTION=pricelist
+  #   networks:
+  #     - host
+  #   ports:
+  #     - "55555:55555"
+  #   depends_on:
+  #     - mongodb
   mongodb:
     image: mongo
     ports:

@@ -1,7 +1,7 @@
 FROM golang:1.15-alpine as builder
 
 RUN set -ex \
-  && apk add --update --no-cache  tzdata zip git upx \
+  && apk add --update --no-cache tzdata zip git upx \
   && cd /usr/share/zoneinfo \
   && zip -r -0 /zoneinfo.zip .
 
@@ -23,7 +23,8 @@ FROM scratch
 ENV ZONEINFO /zoneinfo.zip
 ENV TZ Asia/Yekaterinburg
 COPY --from=builder /zoneinfo.zip /
-COPY --from=builder /app/internal/service/mockdata/test.csv /internal/service/mockdata/test.csv
+COPY --from=builder /app/internal/service/mockdata/test1.csv /internal/service/mockdata/test1.csv
+COPY --from=builder /app/internal/service/mockdata/test2.csv /internal/service/mockdata/test2.csv
 COPY --from=builder /app.bin /grpc-server
 
 CMD ["/grpc-server"]

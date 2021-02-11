@@ -20,7 +20,7 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewPriceListClient(conn)
-	url := &pb.URL{Url: "http://localhost"}
+	url := &pb.URL{Url: "http://localhost?2"}
 	res, err := client.Fetch(context.Background(), url)
 	if err != nil {
 		log.Fatalf("service fetch url error: %v", err)
