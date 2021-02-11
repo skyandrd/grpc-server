@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package service;
+
+service PriceList {
+  rpc Fetch(URL) returns (Response) {}
+  //rpc List(PagingParams, SortingParams) returns (ProductList) {}
+}
+
+message URL {
+  string url = 1;
+} 
+
+message Response {
+  uint32 status = 1;
+}
+
+

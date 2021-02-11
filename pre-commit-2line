@@ -1,0 +1,4 @@
+#!/bin/sh
+
+go clean -cache && golangci-lint run -v 2>&1
+exit $?
