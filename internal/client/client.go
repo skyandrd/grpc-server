@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	address = "localhost:55555"
+	address = "localhost:80"
 )
 
 func main() {

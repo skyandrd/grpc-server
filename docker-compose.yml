@@ -1,21 +1,26 @@
 version: '3.8'
 services:
-  # grpc-server:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - PORT=55555
-  #     - MONGO_CIENT_CONNECTION_TEMEOUT=10
-  #     - MONGO_DB_URI=mongodb://mongodb:27017
-  #     - MONGO_DB=servicedb
-  #     - MONGO_PRICE_COLLECTION=pricelist
-  #   networks:
-  #     - host
-  #   ports:
-  #     - "55555:55555"
-  #   depends_on:
-  #     - mongodb
+  grpc-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=55555
+      - MONGO_CIENT_CONNECTION_TEMEOUT=10
+      - MONGO_DB_URI=mongodb://mongodb:27017
+      - MONGO_DB=servicedb
+      - MONGO_PRICE_COLLECTION=pricelist
+    networks:
+      - host
+    ports:
+      - "55555"
+      # - "55555:55555"
+    restart: "always"
+    deploy:
+      replicas: 2
+    depends_on:
+      - mongodb
+
   mongodb:
     image: mongo
     ports:
@@ -25,8 +30,34 @@ services:
     networks:
       - host
 
+  # nginx container
+  nginx:
+    # specifies the latest nginx image
+    image: nginx:latest
+    # Connects the conf file of the container to the conf file in our folder
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    # It will start up the nginx only when all api containers have started
+    depends_on: 
+      - grpc-server
+        # Connects the standard grpc port 3386 of the nginx container to localhost:3386 or localhost
+    ports: 
+      - "55051:55051"
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/etc/nginx/logs
+    networks:
+      - host
+
 volumes:
    mongodata:
+  #  nginxdata: 
+    #  driver: local
+    #  driver_opts:
+    #    o: bind
+    #    type: none
+    #    device: ./nginxdata
 
 networks:
    host:

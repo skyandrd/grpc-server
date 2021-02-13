@@ -15,23 +15,23 @@ import (
 type FactoryInterface interface {
 	InsertProduct(string, float64) (interface{}, error)
 	Disconnect()
+	GetColection() *mongo.Collection
 }
 
 type factory struct {
-	client               *mongo.Client
-	cancel               context.CancelFunc
-	mongoDb              string
-	mongoPriceCollection string
+	client     *mongo.Client
+	cancel     context.CancelFunc
+	collection *mongo.Collection
 }
 
 // Product is a model.
 type Product struct {
 	// ObjectID   primitive.ObjectID `json:"-" bson:"_id"`
-	Name       string  `json:"name"`
-	Price      float64 `json:"price"`
-	LastUpdate int64   `json:"lastUpdate"`
-	// ID         primitive.ObjectID `bson:"_id,omitempty"` // only uppercase variables can be exported
-	ObjectID primitive.ObjectID `json:"-" bson:"_id"`
+	Name              string             `json:"name"`
+	Price             float64            `json:"price"`
+	LastUpdate        int64              `json:"lastUpdate"`
+	PriceChangedCount int64              `json:"priceChangedCount"`
+	ObjectID          primitive.ObjectID `json:"-" bson:"_id"`
 }
 
 // New is factory constructor.
@@ -48,7 +48,9 @@ func New(mongoDb string, mongoDbURI string, mongoPriceCollection string, mongoCl
 		log.Fatal(err)
 	}
 
-	return &factory{client, cancel, mongoDb, mongoPriceCollection}
+	collection := client.Database(mongoDb).Collection(mongoPriceCollection)
+
+	return &factory{client, cancel, collection}
 }
 
 func (f *factory) Disconnect() {
@@ -63,19 +65,18 @@ func (f *factory) Disconnect() {
 func (f *factory) InsertProduct(name string, price float64) (interface{}, error) {
 	var existingProduct Product
 
-	collection := f.client.Database(f.mongoDb).Collection(f.mongoPriceCollection)
 	filter := bson.M{
 		"name": bson.M{
 			"$eq": name,
 		},
 	}
-	result := collection.FindOne(context.TODO(), filter)
+	result := f.collection.FindOne(context.TODO(), filter)
 
 	err := result.Decode(&existingProduct)
 	if err != nil {
 		if err == mongo.ErrNoDocuments { // need to create new document
-			p := Product{name, price, time.Now().UnixNano(), primitive.NewObjectID()}
-			insertResult, err := collection.InsertOne(context.TODO(), p)
+			p := Product{name, price, time.Now().UnixNano(), 0, primitive.NewObjectID()}
+			insertResult, err := f.collection.InsertOne(context.TODO(), p)
 			if err != nil {
 				return nil, err
 			}
@@ -91,14 +92,16 @@ func (f *factory) InsertProduct(name string, price float64) (interface{}, error)
 		return existingProduct.ObjectID, nil
 	}
 
+	priceChangedCount := existingProduct.PriceChangedCount + 1
 	update := bson.M{
 		"$set": bson.M{
-			"price":      price,
-			"lastupdate": time.Now().UnixNano(),
+			"price":             price,
+			"lastupdate":        time.Now().UnixNano(),
+			"pricechangedcount": priceChangedCount,
 		},
 	}
 
-	updatedResult, err := collection.UpdateOne(
+	updatedResult, err := f.collection.UpdateOne(
 		context.TODO(),
 		filter,
 		update,
@@ -115,4 +118,8 @@ func (f *factory) InsertProduct(name string, price float64) (interface{}, error)
 	log.Println("UpdateOne() result UpsertedID:", updatedResult.UpsertedID)
 
 	return existingProduct.ObjectID, nil
+}
+
+func (f *factory) GetColection() *mongo.Collection {
+	return f.collection
 }

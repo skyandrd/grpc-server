@@ -4,6 +4,7 @@ import (
 	context "context"
 	"errors"
 	"log"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -29,11 +30,16 @@ func (s *priceListServer) Fetch(ctx context.Context, u *URL) (response *Response
 
 	switch u.Url {
 	case "http://localhost?1":
-		filePath = "./internal/service/mockdata/test1.csv"
+		filePath = "./mockdata/test1.csv"
 	case "http://localhost?2":
-		filePath = "./internal/service/mockdata/test2.csv"
+		filePath = "./mockdata/test2.csv"
 	default:
 		return nil, errors.New("Not found")
+	}
+
+	filePath, err = filepath.Abs(filePath)
+	if err != nil {
+		log.Fatalf("invalid filepath: %v", err)
 	}
 
 	records, err := csvreader.Read(filePath)
