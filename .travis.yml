@@ -36,5 +36,5 @@ notifications:
 script:
   - golangci-lint run       # run a bunch of code checkers/linters in parallel
   - docker-compose build
-  - docker-compose start
+  - docker-compose up
   - go test -mod=vendor -v -race ./...  # Run all the tests with the race detector enabled
