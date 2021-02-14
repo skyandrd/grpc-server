@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PriceListClient interface {
 	Fetch(ctx context.Context, in *URL, opts ...grpc.CallOption) (*Response, error)
+	List(ctx context.Context, in *Params, opts ...grpc.CallOption) (*ProductList, error)
 }
 
 type priceListClient struct {
@@ -38,11 +39,21 @@ func (c *priceListClient) Fetch(ctx context.Context, in *URL, opts ...grpc.CallO
 	return out, nil
 }
 
+func (c *priceListClient) List(ctx context.Context, in *Params, opts ...grpc.CallOption) (*ProductList, error) {
+	out := new(ProductList)
+	err := c.cc.Invoke(ctx, "/service.PriceList/List", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PriceListServer is the server API for PriceList service.
 // All implementations must embed UnimplementedPriceListServer
 // for forward compatibility
 type PriceListServer interface {
 	Fetch(context.Context, *URL) (*Response, error)
+	List(context.Context, *Params) (*ProductList, error)
 	mustEmbedUnimplementedPriceListServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedPriceListServer struct {
 
 func (UnimplementedPriceListServer) Fetch(context.Context, *URL) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Fetch not implemented")
+}
+func (UnimplementedPriceListServer) List(context.Context, *Params) (*ProductList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 func (UnimplementedPriceListServer) mustEmbedUnimplementedPriceListServer() {}
 
@@ -84,6 +98,24 @@ func _PriceList_Fetch_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PriceList_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Params)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PriceListServer).List(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/service.PriceList/List",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PriceListServer).List(ctx, req.(*Params))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PriceList_ServiceDesc is the grpc.ServiceDesc for PriceList service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -95,7 +127,11 @@ var PriceList_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Fetch",
 			Handler:    _PriceList_Fetch_Handler,
 		},
+		{
+			MethodName: "List",
+			Handler:    _PriceList_List_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "service.proto",
+	Metadata: "internal/service/service.proto",
 }
