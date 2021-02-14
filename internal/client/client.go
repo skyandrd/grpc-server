@@ -20,11 +20,18 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewPriceListClient(conn)
-	url := &pb.URL{Url: "http://localhost?2"}
+	url := &pb.URL{Url: "http://localhost?1"}
 	res, err := client.Fetch(context.Background(), url)
 	if err != nil {
 		log.Fatalf("service fetch url error: %v", err)
 	}
 
-	log.Printf("response from grpc fetch url: %v", res)
+	log.Printf("response from grpc fetch method: %v", res)
+
+	list, err := client.List(context.Background(), &pb.Params{})
+	if err != nil {
+		log.Fatalf("service fetch url error: %v", err)
+	}
+
+	log.Printf("response from grpc list method: %v", list)
 }

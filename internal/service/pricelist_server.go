@@ -24,7 +24,7 @@ func NewPriceListServer(mongoClient mongo.FactoryInterface) PriceListServer {
 	return s
 }
 
-// Fetch ...
+// Fetch csv file with products.
 func (s *priceListServer) Fetch(ctx context.Context, u *URL) (response *Response, err error) {
 	var filePath string
 
@@ -33,6 +33,8 @@ func (s *priceListServer) Fetch(ctx context.Context, u *URL) (response *Response
 		filePath = "./mockdata/test1.csv"
 	case "http://localhost?2":
 		filePath = "./mockdata/test2.csv"
+	case "http://localhost?3":
+		filePath = "./mockdata/test3.csv"
 	default:
 		return nil, errors.New("Not found")
 	}
@@ -70,4 +72,44 @@ func (s *priceListServer) Fetch(ctx context.Context, u *URL) (response *Response
 	}
 
 	return &Response{Status: uint32(200)}, nil
+}
+
+// List products.
+func (s *priceListServer) List(ctx context.Context, params *Params) (products *ProductList, err error) {
+	productList := &ProductList{}
+	mongoPagingParams := mongo.PagingParams{}
+	mongoSortingParams := mongo.SortingParams{}
+
+	if params.PagingParams != nil {
+		mongoPagingParams.Page = params.PagingParams.Page
+		mongoPagingParams.Limit = params.PagingParams.Limit
+	}
+
+	if params.SortingParams != nil {
+		mongoSortingParams.Name = params.SortingParams.Name
+		mongoSortingParams.Price = params.SortingParams.Price
+		mongoSortingParams.LastUpdate = params.SortingParams.LastUpdate
+		mongoSortingParams.PriceChangedCount = params.SortingParams.PriceChangedCount
+	}
+
+	mongoParams := &mongo.Params{
+		PagingParams:  mongoPagingParams,
+		SortingParams: mongoSortingParams,
+	}
+
+	mongoProductList, err := s.mongoClient.GetProductList(mongoParams)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, p := range mongoProductList {
+		productList.Products = append(productList.Products, &Product{
+			Name:              p.Name,
+			Price:             p.Price,
+			LastUpdate:        p.LastUpdate,
+			PriceChangedCount: p.PriceChangedCount,
+		})
+	}
+
+	return productList, nil
 }

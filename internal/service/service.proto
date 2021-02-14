@@ -3,8 +3,8 @@ syntax = "proto3";
 package service;
 
 service PriceList {
-  rpc Fetch(URL) returns (Response) {}
-  //rpc List(PagingParams, SortingParams) returns (ProductList) {}
+  rpc Fetch (URL) returns (Response) {}  
+  rpc List (Params) returns (ProductList) {}
 }
 
 message URL {
@@ -15,4 +15,31 @@ message Response {
   uint32 status = 1;
 }
 
+message Params {
+  PagingParams pagingParams = 1;
+  SortingParams sortingParams = 2;
+}
+
+message PagingParams {
+  int64 page = 1;
+  int64 limit = 2;
+}
+
+message SortingParams {
+  string name = 1;
+	double price = 2;
+  int64 lastUpdate = 3;
+  int64 priceChangedCount = 4;
+}
+
+message ProductList {
+  repeated Product products = 1;
+}
+
+message Product {
+  string name = 1;
+	double price = 2;
+	int64 lastUpdate = 3;
+	int64 priceChangedCount = 4;
+}
 

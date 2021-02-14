@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.6.1
-// source: service.proto
+// source: internal/service/service.proto
 
 package service
 
@@ -36,7 +36,7 @@ type URL struct {
 func (x *URL) Reset() {
 	*x = URL{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_proto_msgTypes[0]
+		mi := &file_internal_service_service_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -49,7 +49,7 @@ func (x *URL) String() string {
 func (*URL) ProtoMessage() {}
 
 func (x *URL) ProtoReflect() protoreflect.Message {
-	mi := &file_service_proto_msgTypes[0]
+	mi := &file_internal_service_service_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62,7 +62,7 @@ func (x *URL) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use URL.ProtoReflect.Descriptor instead.
 func (*URL) Descriptor() ([]byte, []int) {
-	return file_service_proto_rawDescGZIP(), []int{0}
+	return file_internal_service_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *URL) GetUrl() string {
@@ -83,7 +83,7 @@ type Response struct {
 func (x *Response) Reset() {
 	*x = Response{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_proto_msgTypes[1]
+		mi := &file_internal_service_service_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -96,7 +96,7 @@ func (x *Response) String() string {
 func (*Response) ProtoMessage() {}
 
 func (x *Response) ProtoReflect() protoreflect.Message {
-	mi := &file_service_proto_msgTypes[1]
+	mi := &file_internal_service_service_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -109,7 +109,7 @@ func (x *Response) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Response.ProtoReflect.Descriptor instead.
 func (*Response) Descriptor() ([]byte, []int) {
-	return file_service_proto_rawDescGZIP(), []int{1}
+	return file_internal_service_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Response) GetStatus() uint32 {
@@ -119,55 +119,401 @@ func (x *Response) GetStatus() uint32 {
 	return 0
 }
 
-var File_service_proto protoreflect.FileDescriptor
+type Params struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
 
-var file_service_proto_rawDesc = []byte{
-	0x0a, 0x0d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
-	0x07, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x22, 0x17, 0x0a, 0x03, 0x55, 0x52, 0x4c, 0x12,
-	0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72,
-	0x6c, 0x22, 0x22, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a,
-	0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x06, 0x73,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x32, 0x37, 0x0a, 0x09, 0x50, 0x72, 0x69, 0x63, 0x65, 0x4c, 0x69,
-	0x73, 0x74, 0x12, 0x2a, 0x0a, 0x05, 0x46, 0x65, 0x74, 0x63, 0x68, 0x12, 0x0c, 0x2e, 0x73, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x55, 0x52, 0x4c, 0x1a, 0x11, 0x2e, 0x73, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	PagingParams  *PagingParams  `protobuf:"bytes,1,opt,name=pagingParams,proto3" json:"pagingParams,omitempty"`
+	SortingParams *SortingParams `protobuf:"bytes,2,opt,name=sortingParams,proto3" json:"sortingParams,omitempty"`
+}
+
+func (x *Params) Reset() {
+	*x = Params{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_service_service_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Params) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Params) ProtoMessage() {}
+
+func (x *Params) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_service_service_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Params.ProtoReflect.Descriptor instead.
+func (*Params) Descriptor() ([]byte, []int) {
+	return file_internal_service_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Params) GetPagingParams() *PagingParams {
+	if x != nil {
+		return x.PagingParams
+	}
+	return nil
+}
+
+func (x *Params) GetSortingParams() *SortingParams {
+	if x != nil {
+		return x.SortingParams
+	}
+	return nil
+}
+
+type PagingParams struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Page  int64 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Limit int64 `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+}
+
+func (x *PagingParams) Reset() {
+	*x = PagingParams{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_service_service_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PagingParams) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PagingParams) ProtoMessage() {}
+
+func (x *PagingParams) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_service_service_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PagingParams.ProtoReflect.Descriptor instead.
+func (*PagingParams) Descriptor() ([]byte, []int) {
+	return file_internal_service_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PagingParams) GetPage() int64 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *PagingParams) GetLimit() int64 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type SortingParams struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name              string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Price             float64 `protobuf:"fixed64,2,opt,name=price,proto3" json:"price,omitempty"`
+	LastUpdate        int64   `protobuf:"varint,3,opt,name=lastUpdate,proto3" json:"lastUpdate,omitempty"`
+	PriceChangedCount int64   `protobuf:"varint,4,opt,name=priceChangedCount,proto3" json:"priceChangedCount,omitempty"`
+}
+
+func (x *SortingParams) Reset() {
+	*x = SortingParams{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_service_service_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SortingParams) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SortingParams) ProtoMessage() {}
+
+func (x *SortingParams) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_service_service_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SortingParams.ProtoReflect.Descriptor instead.
+func (*SortingParams) Descriptor() ([]byte, []int) {
+	return file_internal_service_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *SortingParams) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SortingParams) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *SortingParams) GetLastUpdate() int64 {
+	if x != nil {
+		return x.LastUpdate
+	}
+	return 0
+}
+
+func (x *SortingParams) GetPriceChangedCount() int64 {
+	if x != nil {
+		return x.PriceChangedCount
+	}
+	return 0
+}
+
+type ProductList struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Products []*Product `protobuf:"bytes,1,rep,name=products,proto3" json:"products,omitempty"`
+}
+
+func (x *ProductList) Reset() {
+	*x = ProductList{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_service_service_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProductList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProductList) ProtoMessage() {}
+
+func (x *ProductList) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_service_service_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProductList.ProtoReflect.Descriptor instead.
+func (*ProductList) Descriptor() ([]byte, []int) {
+	return file_internal_service_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ProductList) GetProducts() []*Product {
+	if x != nil {
+		return x.Products
+	}
+	return nil
+}
+
+type Product struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name              string  `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Price             float64 `protobuf:"fixed64,2,opt,name=price,proto3" json:"price,omitempty"`
+	LastUpdate        int64   `protobuf:"varint,3,opt,name=lastUpdate,proto3" json:"lastUpdate,omitempty"`
+	PriceChangedCount int64   `protobuf:"varint,4,opt,name=priceChangedCount,proto3" json:"priceChangedCount,omitempty"`
+}
+
+func (x *Product) Reset() {
+	*x = Product{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_service_service_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Product) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Product) ProtoMessage() {}
+
+func (x *Product) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_service_service_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Product.ProtoReflect.Descriptor instead.
+func (*Product) Descriptor() ([]byte, []int) {
+	return file_internal_service_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Product) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Product) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *Product) GetLastUpdate() int64 {
+	if x != nil {
+		return x.LastUpdate
+	}
+	return 0
+}
+
+func (x *Product) GetPriceChangedCount() int64 {
+	if x != nil {
+		return x.PriceChangedCount
+	}
+	return 0
+}
+
+var File_internal_service_service_proto protoreflect.FileDescriptor
+
+var file_internal_service_service_proto_rawDesc = []byte{
+	0x0a, 0x1e, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x12, 0x07, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x22, 0x17, 0x0a, 0x03, 0x55, 0x52, 0x4c,
+	0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75,
+	0x72, 0x6c, 0x22, 0x22, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x06,
+	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x81, 0x01, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x12, 0x39, 0x0a, 0x0c, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x2e, 0x50, 0x61, 0x67, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x0c,
+	0x70, 0x61, 0x67, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x3c, 0x0a, 0x0d,
+	0x73, 0x6f, 0x72, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x53, 0x6f,
+	0x72, 0x74, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x0d, 0x73, 0x6f, 0x72,
+	0x74, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x38, 0x0a, 0x0c, 0x50, 0x61,
+	0x67, 0x69, 0x6e, 0x67, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61,
+	0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x14,
+	0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6c,
+	0x69, 0x6d, 0x69, 0x74, 0x22, 0x87, 0x01, 0x0a, 0x0d, 0x53, 0x6f, 0x72, 0x74, 0x69, 0x6e, 0x67,
+	0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72,
+	0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65,
+	0x12, 0x1e, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x12, 0x2c, 0x0a, 0x11, 0x70, 0x72, 0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64,
+	0x43, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x11, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x3b,
+	0x0a, 0x0b, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x2c, 0x0a,
+	0x08, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x10, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63,
+	0x74, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x73, 0x22, 0x81, 0x01, 0x0a, 0x07,
+	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70,
+	0x72, 0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63,
+	0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x12, 0x2c, 0x0a, 0x11, 0x70, 0x72, 0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65,
+	0x64, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x11, 0x70, 0x72,
+	0x69, 0x63, 0x65, 0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x64, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x32,
+	0x68, 0x0a, 0x09, 0x50, 0x72, 0x69, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x05,
+	0x46, 0x65, 0x74, 0x63, 0x68, 0x12, 0x0c, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
+	0x55, 0x52, 0x4c, 0x1a, 0x11, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x2f, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74,
+	0x12, 0x0f, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x73, 0x1a, 0x14, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x50, 0x72, 0x6f, 0x64,
+	0x75, 0x63, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x00, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
-	file_service_proto_rawDescOnce sync.Once
-	file_service_proto_rawDescData = file_service_proto_rawDesc
+	file_internal_service_service_proto_rawDescOnce sync.Once
+	file_internal_service_service_proto_rawDescData = file_internal_service_service_proto_rawDesc
 )
 
-func file_service_proto_rawDescGZIP() []byte {
-	file_service_proto_rawDescOnce.Do(func() {
-		file_service_proto_rawDescData = protoimpl.X.CompressGZIP(file_service_proto_rawDescData)
+func file_internal_service_service_proto_rawDescGZIP() []byte {
+	file_internal_service_service_proto_rawDescOnce.Do(func() {
+		file_internal_service_service_proto_rawDescData = protoimpl.X.CompressGZIP(file_internal_service_service_proto_rawDescData)
 	})
-	return file_service_proto_rawDescData
+	return file_internal_service_service_proto_rawDescData
 }
 
-var file_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_service_proto_goTypes = []interface{}{
-	(*URL)(nil),      // 0: service.URL
-	(*Response)(nil), // 1: service.Response
+var file_internal_service_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_internal_service_service_proto_goTypes = []interface{}{
+	(*URL)(nil),           // 0: service.URL
+	(*Response)(nil),      // 1: service.Response
+	(*Params)(nil),        // 2: service.Params
+	(*PagingParams)(nil),  // 3: service.PagingParams
+	(*SortingParams)(nil), // 4: service.SortingParams
+	(*ProductList)(nil),   // 5: service.ProductList
+	(*Product)(nil),       // 6: service.Product
 }
-var file_service_proto_depIdxs = []int32{
-	0, // 0: service.PriceList.Fetch:input_type -> service.URL
-	1, // 1: service.PriceList.Fetch:output_type -> service.Response
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+var file_internal_service_service_proto_depIdxs = []int32{
+	3, // 0: service.Params.pagingParams:type_name -> service.PagingParams
+	4, // 1: service.Params.sortingParams:type_name -> service.SortingParams
+	6, // 2: service.ProductList.products:type_name -> service.Product
+	0, // 3: service.PriceList.Fetch:input_type -> service.URL
+	2, // 4: service.PriceList.List:input_type -> service.Params
+	1, // 5: service.PriceList.Fetch:output_type -> service.Response
+	5, // 6: service.PriceList.List:output_type -> service.ProductList
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_service_proto_init() }
-func file_service_proto_init() {
-	if File_service_proto != nil {
+func init() { file_internal_service_service_proto_init() }
+func file_internal_service_service_proto_init() {
+	if File_internal_service_service_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_service_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_internal_service_service_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*URL); i {
 			case 0:
 				return &v.state
@@ -179,8 +525,68 @@ func file_service_proto_init() {
 				return nil
 			}
 		}
-		file_service_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_internal_service_service_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Response); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_service_service_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Params); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_service_service_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PagingParams); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_service_service_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SortingParams); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_service_service_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProductList); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_service_service_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Product); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -196,18 +602,18 @@ func file_service_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_service_proto_rawDesc,
+			RawDescriptor: file_internal_service_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_service_proto_goTypes,
-		DependencyIndexes: file_service_proto_depIdxs,
-		MessageInfos:      file_service_proto_msgTypes,
+		GoTypes:           file_internal_service_service_proto_goTypes,
+		DependencyIndexes: file_internal_service_service_proto_depIdxs,
+		MessageInfos:      file_internal_service_service_proto_msgTypes,
 	}.Build()
-	File_service_proto = out.File
-	file_service_proto_rawDesc = nil
-	file_service_proto_goTypes = nil
-	file_service_proto_depIdxs = nil
+	File_internal_service_service_proto = out.File
+	file_internal_service_service_proto_rawDesc = nil
+	file_internal_service_service_proto_goTypes = nil
+	file_internal_service_service_proto_depIdxs = nil
 }
